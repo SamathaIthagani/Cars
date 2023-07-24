@@ -33,7 +33,7 @@ public class Validations {
 
     public void validateBrand(Brand brand){
         if (brand.getEstablishedYear() < 1700 || brand.getEstablishedYear() > 2023) {
-            throw new InvalidRequestException("Invalid year. Year must be between 1701 and 2023.");
+            throw new InvalidRequestException("Invalid year. Year must be between 1700 and 2023.");
         }
     }
 }
