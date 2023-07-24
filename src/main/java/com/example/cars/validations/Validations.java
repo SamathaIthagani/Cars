@@ -1,6 +1,7 @@
 package com.example.cars.validations;
 
 
+import com.example.cars.domain.Brand;
 import com.example.cars.domain.Car;
 import com.example.cars.util.InvalidRequestException;
 
@@ -27,6 +28,12 @@ public class Validations {
         // Validate mileage
         if (car.getMileage() == null || !car.getMileage().matches(regexMileage)) {
             throw new InvalidRequestException("Mileage must be valid and not be empty");
+        }
+    }
+
+    public void validateBrand(Brand brand){
+        if (brand.getEstablishedYear() < 1700 || brand.getEstablishedYear() > 2023) {
+            throw new InvalidRequestException("Invalid year. Year must be between 1701 and 2023.");
         }
     }
 }

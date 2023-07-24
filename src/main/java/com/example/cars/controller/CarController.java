@@ -7,15 +7,11 @@ import com.example.cars.util.ResponseObject;
 import com.example.cars.validations.Validations;
 import com.sun.jdi.request.InvalidRequestStateException;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.coyote.Response;
-import org.hibernate.sql.Update;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -115,6 +111,7 @@ public class CarController {
     public ResponseEntity<ResponseObject> update(@RequestBody Car car){
         ResponseObject response;
         try {
+            validations.validateCar(car);
             Car result = carService.updateCar(car);
             response = new ResponseObject(Constants.SUCCESS,HttpStatus.OK.name(),
                     Constants.SUCCESS_STATUS_CODE,"Updated cars successfully", UPDATE_CARS,result);

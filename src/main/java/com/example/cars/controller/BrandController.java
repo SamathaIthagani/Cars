@@ -4,6 +4,7 @@ import com.example.cars.domain.Brand;
 import com.example.cars.service.BrandService;
 import com.example.cars.util.Constants;
 import com.example.cars.util.ResponseObject;
+import com.example.cars.validations.Validations;
 import com.sun.jdi.request.InvalidRequestStateException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,16 +32,17 @@ public class BrandController {
     public static final String UPDATE_BRAND= "/update";
 
     public static final String DELETE_BRAND= "/delete/{id}";
-
-
-
     @Autowired
     public BrandService brandService;
+
+    private final Validations validations = new Validations();
 
     @PostMapping("/create")
     public ResponseEntity<ResponseObject> create(@RequestBody Brand brand) {
         ResponseObject response;
-     try{   Brand result = brandService.createBrand(brand);
+     try{
+         validations.validateBrand(brand);
+         Brand result = brandService.createBrand(brand);
         response = new ResponseObject(Constants.SUCCESS, HttpStatus.OK.name(), Constants.SUCCESS_STATUS_CODE,
                 "Created brands successfully", CREATE_BRAND, result);
         return new ResponseEntity<>(response, HttpStatus.OK);
@@ -108,6 +110,7 @@ public class BrandController {
         ResponseObject response;
         Brand result = brandService.updateBrand(brand);
         try {
+            validations.validateBrand(brand);
             response = new ResponseObject(Constants.SUCCESS, HttpStatus.OK.name(), Constants.SUCCESS_STATUS_CODE,
                     "Updated the brand successfully", UPDATE_BRAND, result);
             return new ResponseEntity<>(response, HttpStatus.OK);
