@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -134,7 +135,7 @@ public class BrandController {
     public ResponseEntity<ResponseObject> deleteBrand(@PathVariable Long id) {
         ResponseObject response;
         try {
-            String result = brandService.deleteBrand(id);
+            Map<String, Object> result = brandService.deleteBrand(id);
                 response = new ResponseObject(Constants.SUCCESS, HttpStatus.OK.name(), Constants.SUCCESS_STATUS_CODE,
                         "Deleted the brand successfully", DELETE_BRAND, result);
                 return new ResponseEntity<>(response, HttpStatus.OK);

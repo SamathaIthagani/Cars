@@ -1,13 +1,13 @@
 package com.example.cars.service;
 
 import com.example.cars.controller.BrandController;
-import com.example.cars.domain.Brand;
 import com.example.cars.domain.Car;
 import com.example.cars.repository.CarRepository;
+import com.example.cars.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.*;
 
 @Service
 public class CarService {
@@ -38,10 +38,19 @@ public class CarService {
         return carRepository.save(car1);
     }
 
-    public String deleteCar(Long id) {
-        carRepository.deleteById(id);
-        return " This " + id + " car was deleted";
+    public Map<String, Object> deleteCar(Long id) {
+        Map<String, Object> deleteCar = new HashMap<>();
+        Optional<Car> carToDelete = carRepository.findById(id);
+        if (carToDelete.isPresent()) {
+            carRepository.deleteById(id);
+            deleteCar.put("message", "This car with "+ id + " is deleted successfully");
+        }
+        else{
+            deleteCar.put("message","No car was found with this "+ id);
+        }
+        return deleteCar;
     }
+
 
     public List<Car> getCarsByBrand(String name) {
         return carRepository.findCarsByBrand(name);

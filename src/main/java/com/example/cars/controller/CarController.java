@@ -14,6 +14,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @Controller
@@ -136,9 +138,9 @@ public class CarController {
     public ResponseEntity<ResponseObject> delete(@PathVariable Long id){
         ResponseObject response;
         try {
-            String result = carService.deleteCar(id);
+            Map<String, Object> result = carService.deleteCar(id);
             response = new ResponseObject(Constants.SUCCESS,HttpStatus.OK.name(),
-                    Constants.SUCCESS_STATUS_CODE,"Deleted cars successfully",DELETE_CARS,result);
+                    Constants.SUCCESS_STATUS_CODE,"Deleted car successfully",DELETE_CARS,result);
             return new ResponseEntity<>(response,HttpStatus.OK);
         }
         catch (InvalidRequestStateException e) {

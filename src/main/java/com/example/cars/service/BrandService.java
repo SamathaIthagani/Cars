@@ -6,8 +6,7 @@ import com.example.cars.repository.BrandRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class BrandService {
@@ -34,8 +33,13 @@ public class BrandService {
         return brandRepository.save(brands);
     }
 
-    public String deleteBrand(Long id){
-        brandRepository.deleteById(id);
-        return "brand with "+ id + " is deleted";
+    public Map<String, Object> deleteBrand(Long id) {
+        Map<String,Object> brand = new HashMap<>();
+        Optional<Brand> deleteBrand = brandRepository.findById(id);
+        if (deleteBrand.isPresent()) {
+            brandRepository.deleteById(id);
+        }
+        return brand;
     }
+
 }
